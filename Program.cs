@@ -70,15 +70,15 @@ namespace AntSign
                 {
                     if (anwsers[i].StartsWith("答案") == false)
                         anwsers[i] = $"答案：" + anwsers[i];
-
-                    anwsers[i] = anwsers[i].Replace("&nbsp;", " ").Replace("\r", "").Replace("\n", "").Replace("\t", "").Trim();
                 }
 
                 if (anwsers.Count > 0)
                 {
-                    message_all.AddRange(anwsers);
-                    message_all.Add("=====完整信息=====");
-                    message_all.AddRange(fulls);
+                    message_all.Add("只展示答案↓↓↓↓↓↓↓↓↓↓");
+                    message_all.AddRange(ClearHtmlCode(anwsers));
+                    message_all.Add("");
+                    message_all.Add("完整信息↓↓↓↓↓↓↓↓↓↓");
+                    message_all.AddRange(ClearHtmlCode(fulls));
                     break;
                 }
             }
@@ -98,6 +98,14 @@ namespace AntSign
 
             Console.WriteLine("Send");
             await SendUtil.SendBark(bark_Devicekey, bark_Icon, title, content);
+        }
+
+        private static List<string> ClearHtmlCode(List<string> lst)
+        {
+            for (int i = 0; i < lst.Count; i++)
+                lst[i] = lst[i].Replace("&nbsp;", " ").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("\r", "").Replace("\n", "").Replace("\t", "").Trim();
+
+            return lst;
         }
     }
 
