@@ -103,7 +103,7 @@ namespace AntSign
         private static List<string> ClearHtmlCode(List<string> lst)
         {
             for (int i = 0; i < lst.Count; i++)
-                lst[i] = lst[i].Replace("&nbsp;", " ").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("\r", "").Replace("\n", "").Replace("\t", "").Trim();
+                lst[i] = System.Web.HttpUtility.HtmlDecode(lst[i].Replace("&nbsp;", " ").Replace("&ldquo;", "“").Replace("&rdquo;", "”").Replace("\r", "").Replace("\n", "").Replace("\t", "")).Trim();
 
             return lst;
         }
