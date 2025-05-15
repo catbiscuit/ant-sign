@@ -44,42 +44,49 @@ namespace AntSign
 
             foreach (var type in implementingTypes)
             {
-                //Console.WriteLine("");
-                //Console.WriteLine(type.Name);
-                //if (type.Name == "GetQA_DuoTe_35822")
-                //{
-                //    continue;
-                //}
-                //if (type.Name == "GetQA_ALi213_371835")
-                //{
-                //    continue;
-                //}
-                //if (type.Name == "GetQA_M_ALi213_371835")
-                //{
-                //    continue;
-                //}
-                //if (type.Name == "GetQA_xuexili_jinridaan")
-                //{
-                //    continue;
-                //}
-
-                var specificImplementation = Activator.CreateInstance(type) as IGetQA;
-                (List<string> anwsers, List<string> fulls) = await specificImplementation.GetQA(date);
-
-                for (int i = 0; i < anwsers.Count; i++)
+                try
                 {
-                    if (anwsers[i].StartsWith("答案") == false)
-                        anwsers[i] = $"答案：" + anwsers[i];
+                    //Console.WriteLine("");
+                    //Console.WriteLine(type.Name);
+                    //if (type.Name == "GetQA_DuoTe_35822")
+                    //{
+                    //    continue;
+                    //}
+                    //if (type.Name == "GetQA_ALi213_371835")
+                    //{
+                    //    continue;
+                    //}
+                    //if (type.Name == "GetQA_M_ALi213_371835")
+                    //{
+                    //    continue;
+                    //}
+                    //if (type.Name == "GetQA_xuexili_jinridaan")
+                    //{
+                    //    continue;
+                    //}
+
+                    var specificImplementation = Activator.CreateInstance(type) as IGetQA;
+                    (List<string> anwsers, List<string> fulls) = await specificImplementation.GetQA(date);
+
+                    for (int i = 0; i < anwsers.Count; i++)
+                    {
+                        if (anwsers[i].StartsWith("答案") == false)
+                            anwsers[i] = $"答案：" + anwsers[i];
+                    }
+
+                    if (anwsers.Count > 0)
+                    {
+                        message_all.Add("只展示答案↓↓↓↓↓↓↓↓↓↓");
+                        message_all.AddRange(ClearHtmlCode(anwsers));
+                        message_all.Add("");
+                        message_all.Add("完整信息↓↓↓↓↓↓↓↓↓↓");
+                        message_all.AddRange(ClearHtmlCode(fulls));
+                        break;
+                    }
                 }
-
-                if (anwsers.Count > 0)
+                catch (Exception ex)
                 {
-                    message_all.Add("只展示答案↓↓↓↓↓↓↓↓↓↓");
-                    message_all.AddRange(ClearHtmlCode(anwsers));
-                    message_all.Add("");
-                    message_all.Add("完整信息↓↓↓↓↓↓↓↓↓↓");
-                    message_all.AddRange(ClearHtmlCode(fulls));
-                    break;
+                    Console.WriteLine(ex.ToJson());
                 }
             }
 
