@@ -198,7 +198,12 @@ namespace AntSign
                         {
                             var p = ps[i + 1];
                             var span = p.SelectSingleNode("span");
-                            if (span != null)
+                            if (span == null)
+                            {
+                                anwsers.Add(p.InnerText.Trim());
+                                fulls.Add(p.InnerText.Trim());
+                            }
+                            else
                             {
                                 var strong = span.SelectSingleNode("strong");
                                 if (strong != null)
@@ -217,7 +222,12 @@ namespace AntSign
                         {
                             var p = ps[i + 2];
                             var span = p.SelectSingleNode("span");
-                            if (span != null)
+                            if (span == null)
+                            {
+                                anwsers.Add(p.InnerText.Trim());
+                                fulls.Add(p.InnerText.Trim());
+                            }
+                            else
                             {
                                 var strong = span.SelectSingleNode("strong");
                                 if (strong != null)
