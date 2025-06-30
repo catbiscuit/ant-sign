@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using HtmlAgilityPack;
+using System.Reflection;
 
 namespace AntSign
 {
@@ -197,56 +198,47 @@ namespace AntSign
                         if (i + 1 <= ps.Count)
                         {
                             var p = ps[i + 1];
-                            var span = p.SelectSingleNode("span");
-                            if (span == null)
-                            {
-                                anwsers.Add(p.InnerText.Trim());
-                                fulls.Add(p.InnerText.Trim());
-                            }
-                            else
-                            {
-                                var strong = span.SelectSingleNode("strong");
-                                if (strong != null)
-                                {
-                                    anwsers.Add(strong.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                                else
-                                {
-                                    anwsers.Add(span.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                            }
+                            GetQA_Item(anwsers, fulls, p);
                         }
                         if (i + 2 <= ps.Count)
                         {
                             var p = ps[i + 2];
-                            var span = p.SelectSingleNode("span");
-                            if (span == null)
-                            {
-                                anwsers.Add(p.InnerText.Trim());
-                                fulls.Add(p.InnerText.Trim());
-                            }
-                            else
-                            {
-                                var strong = span.SelectSingleNode("strong");
-                                if (strong != null)
-                                {
-                                    anwsers.Add(strong.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                                else
-                                {
-                                    anwsers.Add(span.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                            }
+                            GetQA_Item(anwsers, fulls, p);
                         }
                     }
                 }
             }
 
             return (anwsers, fulls);
+        }
+
+        private void GetQA_Item(List<string> anwsers, List<string> fulls, HtmlNode p)
+        {
+            fulls.Add(p.InnerText.Trim());
+
+            var span = p.SelectSingleNode("span");
+            if (span != null)
+            {
+                var strong = span.SelectSingleNode("strong");
+                if (strong != null)
+                {
+                    anwsers.Add(strong.InnerText.Trim());
+                    return;
+                }
+            }
+
+            var font = p.SelectSingleNode("font");
+            if (font != null)
+            {
+                var b = font.SelectSingleNode("b");
+                if (b != null)
+                {
+                    anwsers.Add(b.InnerText.Trim());
+                    return;
+                }
+            }
+
+            anwsers.Add(p.InnerText.Trim());
         }
     }
 
@@ -277,46 +269,47 @@ namespace AntSign
                         if (i + 1 <= ps.Count)
                         {
                             var p = ps[i + 1];
-                            var span = p.SelectSingleNode("span");
-                            if (span != null)
-                            {
-                                var strong = span.SelectSingleNode("strong");
-                                if (strong != null)
-                                {
-                                    anwsers.Add(strong.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                                else
-                                {
-                                    anwsers.Add(span.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                            }
+                            GetQA_Item(anwsers, fulls, p);
                         }
                         if (i + 2 <= ps.Count)
                         {
                             var p = ps[i + 2];
-                            var span = p.SelectSingleNode("span");
-                            if (span != null)
-                            {
-                                var strong = span.SelectSingleNode("strong");
-                                if (strong != null)
-                                {
-                                    anwsers.Add(strong.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                                else
-                                {
-                                    anwsers.Add(span.InnerText.Trim());
-                                    fulls.Add(p.InnerText.Trim());
-                                }
-                            }
+                            GetQA_Item(anwsers, fulls, p);
                         }
                     }
                 }
             }
 
             return (anwsers, fulls);
+        }
+
+        private void GetQA_Item(List<string> anwsers, List<string> fulls, HtmlNode p)
+        {
+            fulls.Add(p.InnerText.Trim());
+
+            var span = p.SelectSingleNode("span");
+            if (span != null)
+            {
+                var strong = span.SelectSingleNode("strong");
+                if (strong != null)
+                {
+                    anwsers.Add(strong.InnerText.Trim());
+                    return;
+                }
+            }
+
+            var font = p.SelectSingleNode("font");
+            if (font != null)
+            {
+                var b = font.SelectSingleNode("b");
+                if (b != null)
+                {
+                    anwsers.Add(b.InnerText.Trim());
+                    return;
+                }
+            }
+
+            anwsers.Add(p.InnerText.Trim());
         }
     }
 
