@@ -1,0 +1,25 @@
+name: AntSign
+on:
+  schedule:
+    - cron: 35 22 * * *
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Asia/Shanghai"
+        
+      - name: dotnetEnv
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.0.x'
+        
+      - name: run
+        run: dotnet run -c Release
+        env:        
+          BARK_DEVICEKEY: ${{ secrets.BARK_DEVICEKEY }}
+          BARK_ICON: ${{ secrets.BARK_ICON }}
+        
